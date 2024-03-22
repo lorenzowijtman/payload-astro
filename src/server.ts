@@ -1,21 +1,20 @@
 import dotenv from 'dotenv'
-import next from 'next'
-import nextBuild from 'next/dist/build'
 import path from 'path'
 
 dotenv.config({
   path: path.resolve(__dirname, '../.env'),
 })
-
 import express from 'express'
 import payload from 'payload'
 
+import { handler as ssrHandler } from '../dist/server/entry.mjs'
 import { seed } from './payload/seed'
 
 const app = express()
 const PORT = process.env.PORT || 3000
 
-const start = async (): Promise<void> => {
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+const start = async () => {
   await payload.init({
     secret: process.env.PAYLOAD_SECRET || '',
     express: app,
@@ -29,31 +28,17 @@ const start = async (): Promise<void> => {
     process.exit()
   }
 
-  if (process.env.NEXT_BUILD) {
-    app.listen(PORT, async () => {
-      payload.logger.info(`Next.js is now building...`)
-      // @ts-expect-error
-      await nextBuild(path.join(__dirname, '../'))
-      process.exit()
-    })
+  const astroApp = express()
+  // Change this based on your astro.config.mjs, `base` option.
+  // They should match. The default value is "/".
+  const base = '/'
+  astroApp.use(base, express.static('dist/client/'))
+  astroApp.use(ssrHandler)
 
-    return
-  }
+  payload.logger.info('Starting Astro')
 
-  const nextApp = next({
-    dev: process.env.NODE_ENV !== 'production',
-  })
-
-  const nextHandler = nextApp.getRequestHandler()
-
-  app.use((req, res) => nextHandler(req, res))
-
-  nextApp.prepare().then(() => {
-    payload.logger.info('Starting Next.js...')
-
-    app.listen(PORT, async () => {
-      payload.logger.info(`Next.js App URL: ${process.env.PAYLOAD_PUBLIC_SERVER_URL}`)
-    })
+  astroApp.listen(PORT, async () => {
+    payload.logger.info(`Astro App URL: ${process.env.PAYLOAD_PUBLIC_SERVER_URL}`)
   })
 }
 

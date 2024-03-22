@@ -24,12 +24,15 @@
         "name": "next"
       }
     ],
+    "baseUrl": ".", 
     "paths": {
+      "*": ["node_modules/*", "path/to/your/modules/*"],
       "react": ["./node_modules/@types/react"],
     }
   },
   "include": [
     "**/*.ts",
+    "src/server.mjs",
     "**/*.tsx",
     ".next/types/**/*.ts"
   ],
@@ -39,5 +42,5 @@
   "ts-node": {
     "transpileOnly": true,
     "swc": true
-  }
+  },
 }

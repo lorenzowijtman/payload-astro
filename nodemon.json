@@ -1,7 +1,7 @@
 {
   "$schema": "https://json.schemastore.org/nodemon.json",
   "ext": "ts",
-  "exec": "ts-node src/server.ts -- -I",
+  "exec": "npx tsx src/server.ts -- -I",
   "stdin": false,
   "ignore" : [
     "src/app"
