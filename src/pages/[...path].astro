@@ -1,0 +1,31 @@
+---
+import BlockMap from '../blocks/BlockMap.astro'
+import Layout from '../layouts/Layout.astro'
+
+
+
+const { path } = Astro.params
+
+const routesRes = await fetch(`http://localhost:3000/api/routes?where[path][equals]=${path ?? '/'}`)
+
+var props
+
+if (routesRes.ok) {
+  const routesObj = await routesRes.json()
+  if (routesObj.docs.length === 0) {
+    return Astro.redirect('/404')
+  } else {
+    props = routesObj.docs[0].target.value
+  }
+} else {
+  return Astro.redirect('/404')
+}
+---
+
+<Layout title={props?.title}>
+    {
+      props?.blocks.map((block: any) => (
+          <BlockMap block={block} />
+      ))
+    }
+</Layout>

@@ -1,0 +1,41 @@
+---
+// import RichText from './components/RichText.astro'
+// import CTAButton from './components/CTAButton.astro'
+// import Accordion from './components/Accordion.astro'
+// import Quote from './components/Quote.astro'
+// import FullWidthCard from './components/FullWidthCard.astro'
+// import FlexLayout from './layouts/FlexLayout.astro'
+// import HeroHeader from './layouts/HeroHeader.astro'
+// import ContentBanner from './layouts/ContentBanner.astro'
+// import CardList from './components/CardList.astro'
+// import Container from './layouts/Container.astro'
+// import Shuffle from './components/Shuffle.astro'
+
+// // Mapping of block types to components with dynamic imports
+const blockMap = {
+  // flex_layout: FlexLayout,
+  // container_layout: Container,
+  // rich_text: RichText,
+  // hero_header: HeroHeader,
+  // cta_button: CTAButton,
+  // card_list: CardList,
+  // accordion: Accordion,
+  // content_banner: ContentBanner,
+  // quote: Quote,
+  // shuffle: Shuffle,
+  // full_width_card: FullWidthCard,
+}
+
+const { block } = Astro.props
+
+const mapBlock = () => {
+  const module = blockMap[block.blockType as keyof typeof blockMap]
+  return module
+}
+
+let DynamicComponent = mapBlock() as
+  | ((props: Record<string, any>) => any)
+  | null
+---
+
+{DynamicComponent && <DynamicComponent {...block} />}
