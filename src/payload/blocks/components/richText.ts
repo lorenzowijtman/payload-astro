@@ -1,8 +1,6 @@
 import { HTMLConverterFeature, lexicalEditor, lexicalHTML } from '@payloadcms/richtext-lexical'
 import type { Block } from 'payload/types'
 
-import { ctaRow } from '../../fields/common/ctaRow'
-
 export const afterReadHook = async ({
   req, // full express request
 }) => {
@@ -34,8 +32,6 @@ const RichTextBlock: Block = {
         ],
       }),
     },
-    // TODO remove ctaROW, preferably no components nested on other blocks nested in low level blocks (components)
-    ctaRow(),
     lexicalHTML('richText', { name: 'richText_html' }),
   ],
 }

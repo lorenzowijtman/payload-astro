@@ -1,0 +1,28 @@
+---
+import BlockMap from '../BlockMap.astro'
+import { Block } from '../../models/block'
+const { size = 'normal', blocks } = Astro.props
+
+interface Props {
+  size?: 'normal' | 'wide'
+  blocks?: Block[]
+}
+
+const width = size === 'normal' ? ' w-primary' : 'w-secondary'
+---
+
+<div class="flex justify-center">
+  <div class={`${width} max-w-full px-4 lg:mx-4 lg:px-0`}>
+    {
+      blocks ? (
+        blocks?.map((block: any) => {
+          return (
+              <BlockMap block={block} />
+          )
+        })
+      ) : (
+        <slot />
+      )
+    }
+  </div>
+</div>

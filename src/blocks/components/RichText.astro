@@ -1,0 +1,13 @@
+---
+export interface Props {
+  richText_html: string
+}
+
+const { richText_html } = Astro.props
+---
+
+<div class="flex justify-center xs:px-16 md:px-20">
+  <div class="max-w-primary w-primary mx-4">
+    <Fragment set:html={richText_html} />
+  </div>
+</div>

@@ -1,14 +1,11 @@
-import { Field } from "payload/types";
-import CommonBlocks from "../../blocks/components";
+import { Field } from 'payload/types'
 
-export const CommonBlocksField = (options: {} = {}) => {
-  const field: Field = {
-    name: "blocks",
-    type: "blocks",
-    blocks: [...CommonBlocks],
-    ...options,
-  };
-  return field;
-};
+import CommonBlocks from '../../blocks/components'
 
-export default CommonBlocksField;
+export const CommonBlocksField: Field = {
+  name: 'blocks',
+  type: 'blocks',
+  blocks: [...CommonBlocks],
+}
+
+export default CommonBlocksField

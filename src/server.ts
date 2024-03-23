@@ -27,6 +27,13 @@ const start = async () => {
   // They should match. The default value is "/".
   const base = '/'
   astroApp.use(base, express.static('dist/client/'))
+  app.use((req, res, next) => {
+    const locals = {
+      payload: payload,
+    }
+
+    ssrHandler(req, res, next, locals)
+  })
   astroApp.use(ssrHandler)
 
   payload.logger.info('Starting Astro')
