@@ -8,13 +8,15 @@ import RichText from './components/RichText.astro'
 // import HeroHeader from './layouts/HeroHeader.astro'
 // import ContentBanner from './layouts/ContentBanner.astro'
 // import CardList from './components/CardList.astro'
-// import Container from './layouts/Container.astro'
+import Container from './layouts/Container.astro'
 // import Shuffle from './components/Shuffle.astro'
+
+console.log('should do blockmap')
 
 // // Mapping of block types to components with dynamic imports
 const blockMap = {
   // flex_layout: FlexLayout,
-  // container_layout: Container,
+  container_layout: Container,
   rich_text: RichText,
   // hero_header: HeroHeader,
   // cta_button: CTAButton,
